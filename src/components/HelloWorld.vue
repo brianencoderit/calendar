@@ -1,58 +1,72 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="calendar">
+    <FullCalendar :options="calendarOptions"/>
   </div>
 </template>
 
 <script>
+require('@fullcalendar/daygrid/main.min.css')
+require('@fullcalendar/timegrid/main.min.css')
+
+import FullCalendar from "@fullcalendar/vue";
+import DayGrid from "@fullcalendar/daygrid";
+import TimeGrid from "@fullcalendar/timegrid";
+import Interaction from "@fullcalendar/interaction";
+//import { createEventId } from "./event-utils";
+
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  name: 'Calendar',
+  components: { FullCalendar },
+  data() {
+    return {
+      calendarOptions: { 
+        plugins: [ TimeGrid, DayGrid, Interaction ],
+        initialView: 'timeGridDay' ,
+        headerToolbar: { left: "title", center: "dayGridMonth,timeGridWeek,timeGridDay", right: "prev today next",},
+        selectable: true,
+        events: [
+              {id:1, user: 'brian', title: "Something", start: "2020-11-17T08:00:00+06:00", end: "2020-11-17T12:30:00+06:00", allDay: false, backgroundColor:"#bce6eb", textColor: "#30475e" },
+              {id:2, user: 'bri', title: "Nothing", start: "2020-11-17T12:30:00+06:00", end: "2020-11-17T13:00:00+06:00", allDay: false, backgroundColor:"black", textColor: "#ddd"},
+              {id:3, title: "Nothing", start: "2020-11-17T21:30:00+06:00", end: "2020-11-17T24:00:00+06:00", allDay: false, }
+        ], 
+        //eventClick: this.handleEventClick,
+        //eventsSet: this.handleEvents,
+        //select: this.handleSelect,
+        },
+        // Data: [
+        //       {id:1, title: "Something", start: "2020-11-17T08:00:00+06:00", end: "2020-11-17T12:30:00+06:00", allDay: false,},
+        //       {id:2, title: "Nothing", start: "2020-11-17T16:30:00+06:00", end: "2020-11-17T21:00:00+06:00", allDay: false,}
+        // ],
+    }
+  },
+  methods: {
+    // handleSelect(arg){
+    //   console.log(JSON.stringify(arg))
+    //   let title = prompt('Please enter a new title for your event')
+    //   console.log(title)
+    //   let calendarApi = arg.view.calendar
+    //   calendarApi.unselect() // clear date selection
+    //   if (title) {
+    //     calendarApi.addEvent({
+    //       //id: createEventId(),
+    //       title,
+    //       start: arg.startStr,
+    //       end: arg.endStr,
+    //       allDay: arg.allDay
+    //     })
+    //   }
+    // },
+    // handleEvents(events) {
+    // //this.events = events;
+    // //console.log("handleEvents -> events", JSON.stringify(this.events))   
+    // //console.log(this.events[0].title)   
+    
+    // }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
